@@ -10,6 +10,7 @@
     "strict": false,
     "baseUrl": ".",
     "noEmitHelpers": false,
+    "resolveJsonModule": true,
     "paths": {
       "*": ["node_modules/*"]
     }

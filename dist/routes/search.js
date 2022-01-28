@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const search_repository_ts_1 = require("../repositories/search.repository.ts");
+const search_repository_1 = require("../repositories/search.repository");
 const router = express_1.default.Router();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send(yield (0, search_repository_ts_1.searchItems)(req.body));
+    res.send(yield (0, search_repository_1.searchItems)(req.body));
 }));
 exports.default = router;
 //# sourceMappingURL=search.js.map

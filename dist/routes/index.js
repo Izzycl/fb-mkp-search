@@ -5,7 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const search_1 = __importDefault(require("./search"));
+const locations_1 = __importDefault(require("./locations"));
 const router = express_1.default.Router();
 router.use("/search", search_1.default);
+router.use("/location", locations_1.default);
 exports.default = router;
 //# sourceMappingURL=index.js.map

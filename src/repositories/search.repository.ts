@@ -1,7 +1,39 @@
-import { IBaseItems, IResponseItems, ISearchItem } from "../models/Commons";
+import {
+  IBaseItems,
+  ILocation,
+  IResponseItems,
+  ISearchItem,
+} from "../models/Commons";
 import fs from "fs";
-import { get } from "lodash";
+import { concat, get, isEqual, merge } from "lodash";
 import puppeteer from "puppeteer";
+import locationFile from "../utils/location.json";
+import { Product } from "../models/Product";
+
+const saveNewsLocationsIfFoundItems = async (items: IBaseItems[]) => {
+  try {
+    const newLocation: ILocation[] = items.map((val: IBaseItems) => {
+      return {
+        id: val.idLocation,
+        name: val.location,
+      };
+    });
+    const saveLocal: ILocation[] = merge(newLocation, locationFile).filter(
+      (v, i, a) => a.findIndex((t) => t.id === v.id) === i
+    );
+    fs.writeFile(
+      "./src/utils/location.json",
+      JSON.stringify(saveLocal),
+      (err) => {
+        err ? console.log(err) : console.log("ok json locations");
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  } finally {
+    return;
+  }
+};
 
 export const searchItems = async (
   searchConfig: ISearchItem
@@ -18,6 +50,7 @@ export const searchItems = async (
         }${searchQuery.replace(/ /g, "%20")}&exact=false`
       );
       const bodyHTML = await page.evaluate(() => document.body.outerHTML);
+      // fs.writeFile("./log.html", bodyHTML, () => {});
       const cleanData = bodyHTML.split("feed_units");
       const setupJson = JSON.parse(
         `{ "feed_units${cleanData[1].split(`,"marketplace_seo_page"`)[0]}`
@@ -25,25 +58,11 @@ export const searchItems = async (
       const data = setupJson.feed_units;
       if (data.edges[0].node.__typename !== "MarketplaceSearchFeedNoResults") {
         data.edges.map((node: any) => {
-          itemsFound.push({
-            ide: get(node, "node.listing.id", 0),
-            title: get(node, "node.listing.marketplace_listing_title", ""),
-            link: `https://www.facebook.com/marketplace/item/${get(
-              node,
-              "node.listing.id",
-              ""
-            )}`,
-            image: get(
-              node,
-              "node.listing.primary_listing_photo.image.uri",
-              ""
-            ),
-            price: get(node, "node.listing.listing_price.formatted_amount", 0),
-          });
+          itemsFound.push(new Product(node));
         });
       }
     }
-
+    await saveNewsLocationsIfFoundItems(itemsFound);
     await browser.close();
     return {
       items: itemsFound,
