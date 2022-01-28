@@ -19,7 +19,9 @@
     "express": "^4.17.2",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
-    "puppeteer": "^13.1.2"
+    "puppeteer": "^13.1.2",
+    "puppeteer-autoscroll-down": "^1.0.0",
+    "puppeteer-core": "^13.1.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

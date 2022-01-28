@@ -28,8 +28,7 @@ const searchItems = (searchConfig) => __awaiter(void 0, void 0, void 0, function
             const setupJson = JSON.parse(`{ "feed_units${cleanData[1].split(`,"marketplace_seo_page"`)[0]}`);
             const data = setupJson.feed_units;
             if (data.edges[0].node.__typename !== "MarketplaceSearchFeedNoResults") {
-                data.edges.map((node, idx) => {
-                    console.log(node);
+                data.edges.map((node) => {
                     itemsFound.push({
                         ide: (0, lodash_1.get)(node, "node.listing.id", 0),
                         title: (0, lodash_1.get)(node, "node.listing.marketplace_listing_title", ""),

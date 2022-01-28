@@ -9,6 +9,7 @@
     "outDir": "dist",
     "strict": false,
     "baseUrl": ".",
+    "noEmitHelpers": false,
     "paths": {
       "*": ["node_modules/*"]
     }

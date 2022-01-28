@@ -24,8 +24,7 @@ export const searchItems = async (
       );
       const data = setupJson.feed_units;
       if (data.edges[0].node.__typename !== "MarketplaceSearchFeedNoResults") {
-        data.edges.map((node: any, idx: number) => {
-          console.log(node);
+        data.edges.map((node: any) => {
           itemsFound.push({
             ide: get(node, "node.listing.id", 0),
             title: get(node, "node.listing.marketplace_listing_title", ""),

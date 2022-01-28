@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { searchItems } from "../repositories/search.repository.ts";
+import { searchItems } from "../repositories/search.repository";
 const router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
