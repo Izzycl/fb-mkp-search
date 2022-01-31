@@ -4,6 +4,8 @@ export interface IBaseItems {
   image: string;
   price: number;
   link: string;
+  location: string;
+  idLocation: string;
 }
 
 export interface ISearchItem {
@@ -16,4 +18,9 @@ export interface IResponseItems {
   quantity: number;
   query: string;
   locations: string[];
+}
+
+export interface ILocation {
+  id: string;
+  name: string;
 }
