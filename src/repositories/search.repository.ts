@@ -18,9 +18,12 @@ const saveNewsLocationsIfFoundItems = async (items: IBaseItems[]) => {
         name: val.location,
       };
     });
-    const saveLocal: ILocation[] = merge(newLocation, locationFile).filter(
-      (v, i, a) => a.findIndex((t) => t.id === v.id) === i
-    );
+    const saveLocal: ILocation[] = [
+      ...newLocation.filter(
+        (v, i, a) => a.findIndex((t) => t.id === v.id) === i
+      ),
+      ...locationFile,
+    ].filter((v, i, a) => a.findIndex((t) => t.id === v.id) === i);
     fs.writeFile(
       "./src/utils/location.json",
       JSON.stringify(saveLocal),
@@ -30,8 +33,6 @@ const saveNewsLocationsIfFoundItems = async (items: IBaseItems[]) => {
     );
   } catch (error) {
     console.log(error);
-  } finally {
-    return;
   }
 };
 
@@ -41,7 +42,9 @@ export const searchItems = async (
   try {
     const { searchQuery, locations } = searchConfig;
     const itemsFound: IBaseItems[] = [];
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     for (const location of locations) {
       await page.goto(
@@ -65,7 +68,9 @@ export const searchItems = async (
     await saveNewsLocationsIfFoundItems(itemsFound);
     await browser.close();
     return {
-      items: itemsFound,
+      items: itemsFound.filter(
+        (v, i, a) => a.findIndex((t) => t.ide === v.ide) === i
+      ),
       quantity: itemsFound.length,
       query: searchQuery,
       locations,
