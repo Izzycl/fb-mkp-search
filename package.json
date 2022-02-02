@@ -7,7 +7,6 @@
     "node": "15.x"
   },
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node ./dist/index.js",
