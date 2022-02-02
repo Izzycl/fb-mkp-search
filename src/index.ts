@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
-app.use("/api/v1", Router);
+app.use(process.env.API_VERSSION, Router);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hi there!");
 });
