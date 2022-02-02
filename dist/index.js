@@ -13,7 +13,7 @@ app.use((0, cors_1.default)());
 app.use((0, morgan_1.default)("tiny"));
 app.use(express_1.default.json());
 app.use(process.env.API_VERSSION, routes_1.default);
-app.listen(process.env.PORT || 8080, () => {
-    console.log(`Running on port http://localhost:${process.env.PORT || 8080}`);
+app.listen(process.env.PORT || 5000, () => {
+    console.log(`Running on port http://localhost:${process.env.PORT || 5000}`);
 });
 //# sourceMappingURL=index.js.map
